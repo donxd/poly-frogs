@@ -6,6 +6,12 @@ froggggg
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
 
+### Install dependencies
+
+```
+bower i
+```
+
 ## Viewing Your Element
 
 ```
