@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="frok-box">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `frok-box`
+     * froggggg
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class FrokBox extends Polymer.Element {
+      static get is() { return 'frok-box'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'frok-box'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(FrokBox.is, FrokBox);
+  </script>
+</dom-module>
