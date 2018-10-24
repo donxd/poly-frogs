@@ -23,6 +23,12 @@
       static get is() { return 'frok-box'; }
       static get properties() {
         return {
+          boxes:{
+            type: Number,
+            notify: true,
+            reflectToAttribute: true,
+            value: 5
+          },
           prop1: {
             type: String,
             value: 'frok-box'
