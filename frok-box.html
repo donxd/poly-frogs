@@ -60,12 +60,7 @@
         }
 
         this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
-        // this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', this.jumpFrog);
         this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', event => this.jumpFrog(event));
-
-        // this.$.elements.rows[0].cells.forEach(cell => {
-        //   cell.addEventListener('click', this.jump)
-        // });
       }
       jumpFrog (event) {
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
