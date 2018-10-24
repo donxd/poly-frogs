@@ -41,6 +41,11 @@
      * @demo demo/index.html
      */
     class FrokBox extends Polymer.Element {
+      static get context() {
+        _context: {
+          value: null
+        }
+      }
       static get is() { return 'frok-box'; }
       ready () {
         super.ready();
@@ -59,28 +64,31 @@
           positionFrog = this.selected - 1;
         }
 
+        let binding = this.jumpFrog.bind(this);
+        this._context = binding;
+
         this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
-        this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', event => this.jumpFrog(event));
+        this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', binding, true);
       }
       jumpFrog (event) {
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
 
-        // if (boxFrog) {
-          let positionFrog = boxFrog.cellIndex;
-          let oldPositionFrog = positionFrog;
+        let positionFrog = boxFrog.cellIndex;
+        let oldPositionFrog = positionFrog;
 
-          positionFrog++;
-          if (positionFrog >= this.boxes) {
-            positionFrog = 0;
-          }
+        positionFrog++;
+        if (positionFrog >= this.boxes) {
+          positionFrog = 0;
+        }
 
-          let newPositionFrog = positionFrog;
+        let newPositionFrog = positionFrog;
 
-          this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
-          this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
-          this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', this.jumpFrog);
-          this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', this.jumpFrog);
-        // }
+        let binding = this._context;
+
+        this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
+        this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
+        this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
+        this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
       }
       static get properties() {
         return {
