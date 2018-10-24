@@ -49,11 +49,17 @@
       }
       static get properties() {
         return {
-          boxes:{
+          boxes: {
             type: Number,
             notify: true,
             reflectToAttribute: true,
             value: 5
+          },
+          selected: {
+            type: Number,
+            notify: true,
+            reflectToAttribute: true,
+            value: 1
           },
           prop1: {
             type: String,
