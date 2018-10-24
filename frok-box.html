@@ -60,6 +60,38 @@
         }
 
         this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
+        // this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', this.jumpFrog);
+        this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', event => this.jumpFrog);
+
+        // this.$.elements.rows[0].cells.forEach(cell => {
+        //   cell.addEventListener('click', this.jump)
+        // });
+      }
+      jumpFrog (event) {
+        // let boxFrog = document.querySelector(':host(.frog)');
+        // let boxFrog = this.$$('.frog');
+        // let boxFrog = Polymer.dom(this).querySelector('.frog');
+        let boxFrog = this.shadowRoot.querySelector('.frog');
+        // let boxFrog = this.$.elements.querySelector('.frog');
+        // let boxFrog = Polymer.dom().querySelector('.frog');
+        let positionFrog = boxFrog.cellIndex;
+        let oldPositionFrog = positionFrog;
+
+        positionFrog++;
+        if (positionFrog > this.boxes) {
+          positionFrog -= this.boxes+1;
+        }
+
+        let newPositionFrog = positionFrog;
+
+        console.log('')
+
+        this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
+        this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
+        // this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', this.jumpFrog);
+        // this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', this.jumpFrog);
+        this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', event => this.jumpFrog);
+        this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', event => this.jumpFrog);
       }
       static get properties() {
         return {
