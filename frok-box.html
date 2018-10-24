@@ -13,11 +13,11 @@
     </style>
     <h2>Hello [[prop1]] [[boxes]]!</h2>
     <table id='elements'>
-      <tr>
+      <!-- <tr>
         <td>1</td>
         <td>2</td>
         <td>3</td>
-      </tr>
+      </tr -->
     </table>
   </template>
 
@@ -32,6 +32,18 @@
      */
     class FrokBox extends Polymer.Element {
       static get is() { return 'frok-box'; }
+      ready () {
+        super.ready();
+
+        let cells = [];
+        for (let i = 0; i < this.boxes; i++) {
+          cells.push( `<td>${i+1}</td>`);
+        }
+
+        let content = `<tr>${cells.join('')}</tr>`;
+
+        this.$.elements.innerHTML = content;
+      }
       static get properties() {
         return {
           boxes:{
