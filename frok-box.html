@@ -16,6 +16,10 @@
       :host #elements td:hover {
         border: 2px solid red;
       }
+      :host .frog {
+        color: green;
+        text-decoration-style: dashed;
+      }
       /*:host #elements td([pressed]) {
         background-color: red;
       }*/
@@ -46,6 +50,13 @@
         let content = `<tr>${cells.join('')}</tr>`;
 
         this.$.elements.innerHTML = content;
+
+        let positionFrog = 0;
+        if (this.selected <= this.boxes) {
+          // this.$.elements.rows[0].cells[this.selected-1].classList.add('frog');
+          positionFrog = this.selected - 1;
+        }
+        this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
       }
       static get properties() {
         return {
