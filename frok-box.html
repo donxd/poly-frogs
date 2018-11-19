@@ -32,6 +32,9 @@
       :host .table .row .cell {
         display: table-cell;
       }
+      :host .vcenter {
+        vertical-align: middle;
+      }
       /*:host #elements td([pressed]) {
         background-color: red;
       }*/
@@ -41,18 +44,27 @@
       <div class='table'>
         <div class='row'>
           <div class='cell'>
-            <label for="nboxes">Número de cajas: &nbsp;</label>
+            <div class='table'>
+              <div class='row'>
+                <div class='cell'>
+                  <label for="nboxes">Número de cajas: &nbsp;</label>
+                </div>
+                <div class='cell'>
+                  <input type="number" id="nboxes" min="1">
+                </div>
+              </div>
+              <div class='row'>
+                <div class='cell'>
+                  <label for="pfrog">Posición rana: </label>
+                </div>
+                <div class='cell'>
+                  <input type="number" id="pfrog" min="1">
+                </div>
+              </div>
+            </div>
           </div>
-          <div class='cell'>
-            <input type="number" id="nboxes" min="1">
-          </div>
-        </div>
-        <div class='row'>
-          <div class='cell'>
-            <label for="pfrog">Posición rana: </label>
-          </div>
-          <div class='cell'>
-            <input type="number" id="pfrog" min="1">
+          <div class='cell vcenter'>
+            &nbsp; <button>Aplicar</button> &nbsp;
           </div>
         </div>
       </div>
