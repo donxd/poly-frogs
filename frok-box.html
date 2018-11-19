@@ -44,27 +44,18 @@
       <div class='table'>
         <div class='row'>
           <div class='cell'>
-            <div class='table'>
-              <div class='row'>
-                <div class='cell'>
-                  <label for="nboxes">Número de cajas: &nbsp;</label>
-                </div>
-                <div class='cell'>
-                  <input type="number" id="nboxes" min="1">
-                </div>
-              </div>
-              <div class='row'>
-                <div class='cell'>
-                  <label for="pfrog">Posición rana: </label>
-                </div>
-                <div class='cell'>
-                  <input type="number" id="pfrog" min="1">
-                </div>
-              </div>
-            </div>
+            <label for="nboxes">Número de cajas: &nbsp;</label>
           </div>
-          <div class='cell vcenter'>
-            &nbsp; <button>Aplicar</button> &nbsp;
+          <div class='cell'>
+            <input type="number" id="nboxes" min="1" value={{boxes::input}} on-change="updateBoxes">
+          </div>
+        </div>
+        <div class='row'>
+          <div class='cell'>
+            <label for="pfrog">Posición rana: </label>
+          </div>
+          <div class='cell'>
+            <input type="number" id="pfrog" min="1" value={{selected::input}}>
           </div>
         </div>
       </div>
@@ -130,6 +121,58 @@
         this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
         this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
         this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
+      }
+      updateBoxes (event) {
+        // const numberBoxesCreated = this.getNumberCreatedBoxes(event);
+        const numberBoxesCreated = this.getNumberCreatedBoxes();
+
+        // console.log('numberBoxesCreated -> ', numberBoxesCreated);
+        // console.log('this.newBoxes -> ', this.newBoxes);
+        // console.log('this.boxes -> ', this.boxes);
+
+        if (numberBoxesCreated < this.boxes) {
+          this.addBoxes();
+        } else if (numberBoxesCreated > this.boxes){
+          // this.removeBoxes(event);
+          this.removeBoxes();
+        }
+      }
+      getCreatedBoxes (){
+        return this.$.elements.rows[0].cells;
+      }
+      // getNumberCreatedBoxes (event) {
+      getNumberCreatedBoxes () {
+        return this.getCreatedBoxes().length;
+        // return this.$.elements.rows[0].cells.length;
+      }
+      // getContainerBoxes(event) {
+      getContainerBoxes() {
+        return this.$.elements.rows[0];
+      }
+      // addBoxes(event) {
+      addBoxes(event) {
+        const numberCreatedBoxes = this.getNumberCreatedBoxes();
+        const numberNewBoxes = this.boxes - numberCreatedBoxes;
+        // const containerBoxes = this.getContainerBoxes(event);
+        const containerBoxes = this.getContainerBoxes();
+
+        // console.log('numberNewBoxes -> ', numberNewBoxes);
+
+        for (let i = 0; i < numberNewBoxes; i++) {
+          const newBox = this.getNewBox();
+          containerBoxes.appendChild(newBox);
+        }
+      }
+      // removeBoxes() {
+      removeBoxes(event) {
+        console.log('removeBoxes');
+      }
+      getNewBox () {
+        const numberCreatedBoxes = this.getNumberCreatedBoxes();
+        const box = document.createElement('td');
+        box.innerHTML = numberCreatedBoxes + 1;
+
+        return box;
       }
       static get properties() {
         return {
