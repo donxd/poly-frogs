@@ -55,7 +55,7 @@
             <label for="pfrog">Posición rana: </label>
           </div>
           <div class='cell'>
-            <input type="number" id="pfrog" min="1" value={{selected::input}}>
+            <input type="number" id="pfrog" min="1" value={{selected::input}} on-change="updatePositionFrog">
           </div>
         </div>
       </div>
@@ -103,9 +103,7 @@
         this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', binding, true);
       }
       jumpFrog (event) {
-        let boxFrog = Polymer.dom(this.root).querySelector('.frog');
-
-        let positionFrog = boxFrog.cellIndex;
+        let positionFrog = this.getPositionFrog();
         let oldPositionFrog = positionFrog;
 
         positionFrog++;
@@ -131,7 +129,17 @@
           this.removeBoxes();
         }
       }
-      getCreatedBoxes (){
+      updatePositionFrog (event) {
+        const positionFrog = this.getPositionFrog();
+      }
+      getPositionFrog () {
+        let boxFrog = Polymer.dom(this.root).querySelector('.frog');
+
+        let positionFrog = boxFrog.cellIndex;
+
+        return positionFrog;
+      }
+      getCreatedBoxes () {
         return this.$.elements.rows[0].cells;
       }
       getNumberCreatedBoxes () {
