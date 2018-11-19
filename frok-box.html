@@ -123,48 +123,34 @@
         this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
       }
       updateBoxes (event) {
-        // const numberBoxesCreated = this.getNumberCreatedBoxes(event);
         const numberBoxesCreated = this.getNumberCreatedBoxes();
-
-        // console.log('numberBoxesCreated -> ', numberBoxesCreated);
-        // console.log('this.newBoxes -> ', this.newBoxes);
-        // console.log('this.boxes -> ', this.boxes);
 
         if (numberBoxesCreated < this.boxes) {
           this.addBoxes();
         } else if (numberBoxesCreated > this.boxes){
-          // this.removeBoxes(event);
           this.removeBoxes();
         }
       }
       getCreatedBoxes (){
         return this.$.elements.rows[0].cells;
       }
-      // getNumberCreatedBoxes (event) {
       getNumberCreatedBoxes () {
         return this.getCreatedBoxes().length;
-        // return this.$.elements.rows[0].cells.length;
       }
-      // getContainerBoxes(event) {
       getContainerBoxes() {
         return this.$.elements.rows[0];
       }
-      // addBoxes(event) {
-      addBoxes(event) {
+      addBoxes() {
         const numberCreatedBoxes = this.getNumberCreatedBoxes();
         const numberNewBoxes = this.boxes - numberCreatedBoxes;
-        // const containerBoxes = this.getContainerBoxes(event);
         const containerBoxes = this.getContainerBoxes();
-
-        // console.log('numberNewBoxes -> ', numberNewBoxes);
 
         for (let i = 0; i < numberNewBoxes; i++) {
           const newBox = this.getNewBox();
           containerBoxes.appendChild(newBox);
         }
       }
-      // removeBoxes() {
-      removeBoxes(event) {
+      removeBoxes() {
         console.log('removeBoxes');
       }
       getNewBox () {
