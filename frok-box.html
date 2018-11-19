@@ -23,11 +23,40 @@
         background-position: center center;
         background-repeat: no-repeat;
       }
+      :host .table {
+        display: table;
+      }
+      :host .table .row {
+        display: table-row;
+      }
+      :host .table .row .cell {
+        display: table-cell;
+      }
       /*:host #elements td([pressed]) {
         background-color: red;
       }*/
     </style>
-    <h2>Hello [[prop1]] [[boxes]]!</h2>
+    <h2>Hello frog - [[boxes]]!</h2>
+    <template is='dom-if' if='{{config}}'>
+      <div class='table'>
+        <div class='row'>
+          <div class='cell'>
+            <label for="nboxes">Número de cajas: &nbsp;</label>
+          </div>
+          <div class='cell'>
+            <input type="number" id="nboxes" min="1">
+          </div>
+        </div>
+        <div class='row'>
+          <div class='cell'>
+            <label for="pfrog">Posición rana: </label>
+          </div>
+          <div class='cell'>
+            <input type="number" id="pfrog" min="1">
+          </div>
+        </div>
+      </div>
+    </template>
     <table id='elements'></table>
   </template>
 
