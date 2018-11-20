@@ -35,9 +35,6 @@
       :host .vcenter {
         vertical-align: middle;
       }
-      /*:host #elements td([pressed]) {
-        background-color: red;
-      }*/
     </style>
     <h2>Hello frog - [[boxes]]!</h2>
     <template is='dom-if' if='{{config}}'>
@@ -55,7 +52,7 @@
             <label for="pfrog">Posición rana: </label>
           </div>
           <div class='cell'>
-            <input type="number" id="pfrog" min="1" value={{selected::input}} on-change="updatePositionFrog">
+            <input type="number" id="pfrog" min="1" value={{selected::input}}>
           </div>
         </div>
       </div>
@@ -138,8 +135,11 @@
       updatePositionFrogImpl (oldPositionFrog, controlPosition) {
         const binding = this._context;
 
-        this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
-        this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
+        if (oldPositionFrog < this.$.elements.rows[0].cells.length){
+
+          this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
+          this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
+        }
 
         let newPositionFrog = 0;
         if (controlPosition <= this.boxes) {
@@ -150,6 +150,12 @@
 
         this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
         this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
+      }
+      changeSelected (newPosition, oldPosition) {
+        if (oldPosition){
+          this.selected = newPosition;
+          this.updatePositionFrogImpl(oldPosition-1, newPosition);
+        }
       }
       getPositionFrog () {
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
@@ -213,6 +219,7 @@
             type: Number,
             notify: true,
             reflectToAttribute: true,
+            observer: 'changeSelected',
             value: 1
           },
           config: {
