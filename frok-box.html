@@ -133,14 +133,17 @@
       }
       updatePositionFrog (event) {
         const oldPositionFrog = this.getPositionFrog();
+        this.updatePositionFrogImpl(oldPositionFrog, this.selected);
+      }
+      updatePositionFrogImpl (oldPositionFrog, controlPosition) {
         const binding = this._context;
 
         this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
         this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
 
         let newPositionFrog = 0;
-        if (this.selected <= this.boxes) {
-          newPositionFrog = this.selected - 1;
+        if (controlPosition <= this.boxes) {
+          newPositionFrog = controlPosition - 1;
         } else {
           this.selected = 1;
         }
