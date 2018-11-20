@@ -170,9 +170,16 @@
         }
       }
       removeBoxes() {
+        let positionFrog = this.getPositionFrog();
         const numberCreatedBoxes = this.getNumberCreatedBoxes();
         const numberBoxes = this.boxes;
         const containerBoxes = this.getContainerBoxes();
+
+        if (positionFrog >= numberBoxes) {
+          positionFrog = numberBoxes;
+          this.selected = positionFrog;
+          this.updatePositionFrog();
+        }
 
         for (let i = numberCreatedBoxes-1; i >= numberBoxes; i--) {
           const box = this.$.elements.rows[0].cells[i];
