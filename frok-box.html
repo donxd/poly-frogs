@@ -119,6 +119,8 @@
         this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
         this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
         this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
+
+        this.selected = newPositionFrog + 1;
       }
       updateBoxes (event) {
         const numberBoxesCreated = this.getNumberCreatedBoxes();
@@ -135,7 +137,6 @@
 
         this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
         this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
-
 
         let newPositionFrog = 0;
         if (this.selected <= this.boxes) {
