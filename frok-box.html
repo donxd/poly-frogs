@@ -78,7 +78,6 @@
       static get is() { return 'frok-box'; }
       ready () {
         super.ready();
-        // console.log('init ready');
 
         let cells = [];
         for (let i = 0; i < this.boxes; i++) {
@@ -99,7 +98,6 @@
 
         this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
         this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', binding, true);
-        // console.log('end ready');
       }
       jumpFrog (event) {
         let positionFrog = this.getPositionFrog();
@@ -135,8 +133,6 @@
         this.updatePositionFrogImpl(oldPositionFrog, this.selected);
       }
       updatePositionFrogImpl (oldPositionFrog, controlPosition) {
-        // console.log('updatePositionFrogImpl - oldPositionFrog -> ', oldPositionFrog);
-        // console.log('updatePositionFrogImpl - controlPosition -> ', controlPosition);
         const binding = this._context;
 
         if (oldPositionFrog > -1 && oldPositionFrog < this.$.elements.rows[0].cells.length){
@@ -152,30 +148,16 @@
           this.selected = 1;
         }
 
-        // console.log(` ${newPositionFrog} / ${this.$.elements.rows[0].cells.length}`);
-
         if (newPositionFrog > -1) {
           this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
           this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
         }
       }
       changeSelected (newPosition, oldPosition) {
-        // console.log('init changeSelected');
-        // if (!oldPosition) {
-        //   oldPosition = 0;
-        // }
-        // console.log('this.$.elements.rows.length -> ', this.$.elements.rows.length);
-        // console.log('changeSelected - newPosition -> ', newPosition);
-        // console.log('changeSelected - oldPosition -> ', oldPosition);
-        
         if (this.$.elements.rows.length && oldPosition > -1){
           this.selected = newPosition;
           this.updatePositionFrogImpl(oldPosition-1, newPosition);
-        // } else {
-        //   this.selected = newPosition;
-        //   this.updatePositionFrogImpl(undefined, newPosition);
         }
-        // console.log('end changeSelected');
       }
       getPositionFrog () {
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
