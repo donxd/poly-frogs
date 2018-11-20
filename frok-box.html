@@ -131,17 +131,21 @@
       }
       updatePositionFrog (event) {
         const oldPositionFrog = this.getPositionFrog();
+        const binding = this._context;
 
         this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
+        this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
 
-        let positionFrog = 0;
+
+        let newPositionFrog = 0;
         if (this.selected <= this.boxes) {
-          positionFrog = this.selected - 1;
+          newPositionFrog = this.selected - 1;
         } else {
           this.selected = 1;
         }
 
-        this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
+        this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
+        this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
       }
       getPositionFrog () {
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
