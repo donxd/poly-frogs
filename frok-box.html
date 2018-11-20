@@ -130,7 +130,18 @@
         }
       }
       updatePositionFrog (event) {
-        const positionFrog = this.getPositionFrog();
+        const oldPositionFrog = this.getPositionFrog();
+
+        this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
+
+        let positionFrog = 0;
+        if (this.selected <= this.boxes) {
+          positionFrog = this.selected - 1;
+        } else {
+          this.selected = 1;
+        }
+
+        this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
       }
       getPositionFrog () {
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
