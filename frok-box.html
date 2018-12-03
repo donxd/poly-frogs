@@ -44,7 +44,8 @@
             <label for="nboxes">Número de cajas: &nbsp;</label>
           </div>
           <div class='cell'>
-            <input type="number" id="nboxes" min="1" value={{boxes::input}} on-change="updateBoxes">
+            <!-- <input type="number" id="nboxes" min="1" value={{boxes::input}} on-change="updateBoxes"> -->
+            <input type="number" id="nboxes" min="1" value={{boxes::input}}>
           </div>
         </div>
         <div class='row'>
@@ -159,7 +160,25 @@
           this.updatePositionFrogImpl(oldPosition-1, newPosition);
         }
       }
+      changeBoxes (newNumberBoxes, oldNumberBoxes) {
+        // polymer firefox double change
+        // 1st - newNumberBoxes:0 , oldNumberBoxes:5
+        // 2nd - newNumberBoxes:3 , oldNumberBoxes:0
+        if (!newNumberBoxes) this.oldNumberBoxesAux = oldNumberBoxes;
+        if (!oldNumberBoxes) oldNumberBoxes = this.oldNumberBoxesAux;
+
+        if (newNumberBoxes > 0) {
+          if (newNumberBoxes > oldNumberBoxes) {
+            this.boxes = newNumberBoxes;
+            this.addBoxes();
+          } else if (newNumberBoxes < oldNumberBoxes) {
+            this.boxes = newNumberBoxes;
+            this.removeBoxes();
+          }
+        }
+      }
       getPositionFrog () {
+          // let boxFrog = this.$.elements.querySelector('.frog');
         let boxFrog = Polymer.dom(this.root).querySelector('.frog');
 
         let positionFrog = boxFrog.cellIndex;
@@ -215,6 +234,7 @@
             type: Number,
             notify: true,
             reflectToAttribute: true,
+            observer: 'changeBoxes',
             value: 5
           },
           selected: {
