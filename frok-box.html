@@ -88,6 +88,16 @@
       ready () {
         super.ready();
 
+        if (this.advanced) {
+          this.generateObjectBoxes();
+        } else {
+          this.generateHtmlBoxes();
+        }
+      }
+      generateObjectBoxes () {
+        
+      }
+      generateHtmlBoxes () {
         let cells = [];
         for (let i = 0; i < this.boxes; i++) {
           cells.push( `<td>${i+1}</td>`);
