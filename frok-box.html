@@ -58,7 +58,15 @@
         </div>
       </div>
     </template>
-    <table id='elements'></table>
+    <table id='elements'>
+      <tr>
+        <dom-repeat items="{{boxesElements}}">
+          <template>
+            <td>{{indexForElement(item)}}</td>
+          </template>
+        </dom-repeat>
+      </tr>
+    </table>
   </template>
 
   <script>
