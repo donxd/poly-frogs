@@ -62,7 +62,7 @@
     <table id='elements'>
       <tr>
         <template is='dom-repeat' items="{{boxesElements}}">
-          <td>{{getIndex(index)}}</td>
+          <td class$="{{getBoxClass(index)}}">{{getIndex(index)}}</td>
         </template>
       </tr>
     </table>
@@ -104,6 +104,11 @@
       }
       getIndex (index) {
         return index + 1;
+      }
+      getBoxClass (index) {
+        const indexBox = index+1;
+
+        return indexBox === this.selected ? 'frog' : '';
       }
       generateHtmlBoxes () {
         let cells = [];
