@@ -62,7 +62,7 @@
     <table id='elements'>
       <tr>
         <template is='dom-repeat' items="{{boxesElements}}">
-          <td class$="{{getBoxClass(index)}}">{{getIndex(index)}}</td>
+          <td class$="{{getBoxClass(item)}}">{{getIndex(item)}}</td>
         </template>
       </tr>
     </table>
@@ -98,22 +98,22 @@
       generateObjectBoxes () {
         this.boxesElements = [];
         for (let i = 0; i < this.boxes; i++) {
-          this.boxesElements.push(this.getNewBoxObject(i+1));
+          const box = this.getNewBoxObject(i+1, this.selected);
+          this.boxesElements.push(box);
         }
       }
-      getNewBoxObject (index) {
+      getNewBoxObject (index, itemSelected) {
+        const attrSelected = index === itemSelected;
         return {
-          selected: false, 
+          selected: attrSelected, 
           index
         };
       }
-      getIndex (index) {
-        return index + 1;
+      getIndex (item) {
+        return item.index;
       }
-      getBoxClass (index) {
-        const indexBox = index+1;
-
-        return indexBox === this.selected ? CSS_STYLE_FROG : '';
+      getBoxClass (item) {
+        return item.selected ? CSS_STYLE_FROG : '';
       }
       generateHtmlBoxes () {
         let cells = [];
