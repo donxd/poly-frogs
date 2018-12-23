@@ -45,7 +45,6 @@
             <label for="nboxes">Número de cajas: &nbsp;</label>
           </div>
           <div class='cell'>
-            <!-- <input type="number" id="nboxes" min="1" value={{boxes::input}} on-change="updateBoxes"> -->
             <input type="number" id="nboxes" min="1" value={{boxes::input}}>
           </div>
         </div>
@@ -240,6 +239,16 @@
         }
       }
       changeBoxes (newNumberBoxes, oldNumberBoxes) {
+        if (this.advanced) {
+          this.changeBoxesByObjects(newNumberBoxes, oldNumberBoxes);
+        } else {
+          this.changeBoxesByHTMLControl(newNumberBoxes, oldNumberBoxes);
+        }
+      }
+      this.changeBoxesByObjects (newNumberBoxes, oldNumberBoxes) {
+        
+      }
+      changeBoxesByHTMLControl (newNumberBoxes, oldNumberBoxes){
         // polymer firefox double change
         // 1st - newNumberBoxes:0 , oldNumberBoxes:5
         // 2nd - newNumberBoxes:3 , oldNumberBoxes:0
