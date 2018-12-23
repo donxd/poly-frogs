@@ -77,6 +77,8 @@
      * @polymer
      * @demo demo/index.html
      */
+    const CSS_STYLE_FROG = 'frog';
+
     class FrokBox extends Polymer.Element {
       static get context() {
         _context: {
@@ -96,11 +98,14 @@
       generateObjectBoxes () {
         this.boxesElements = [];
         for (let i = 0; i < this.boxes; i++) {
-          this.boxesElements.push(this.getNewBoxObject());
+          this.boxesElements.push(this.getNewBoxObject(i+1));
         }
       }
-      getNewBoxObject () {
-        return { selected: false };
+      getNewBoxObject (index) {
+        return {
+          selected: false, 
+          index
+        };
       }
       getIndex (index) {
         return index + 1;
@@ -108,7 +113,7 @@
       getBoxClass (index) {
         const indexBox = index+1;
 
-        return indexBox === this.selected ? 'frog' : '';
+        return indexBox === this.selected ? CSS_STYLE_FROG : '';
       }
       generateHtmlBoxes () {
         let cells = [];
@@ -128,7 +133,7 @@
         let binding = this.jumpFrog.bind(this);
         this._context = binding;
 
-        this.$.elements.rows[0].cells[ positionFrog ].classList.add('frog');
+        this.$.elements.rows[0].cells[ positionFrog ].classList.add(CSS_STYLE_FROG);
         this.$.elements.rows[0].cells[ positionFrog ].addEventListener('click', binding, true);
       }
       jumpFrog (event) {
@@ -144,8 +149,8 @@
 
         let binding = this._context;
 
-        this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
-        this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
+        this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove(CSS_STYLE_FROG);
+        this.$.elements.rows[0].cells[ newPositionFrog ].classList.add(CSS_STYLE_FROG);
         this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
         this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
 
@@ -169,7 +174,7 @@
 
         if (oldPositionFrog > -1 && oldPositionFrog < this.$.elements.rows[0].cells.length){
 
-          this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove('frog');
+          this.$.elements.rows[0].cells[ oldPositionFrog ].classList.remove(CSS_STYLE_FROG);
           this.$.elements.rows[0].cells[ oldPositionFrog ].removeEventListener('click', binding, true);
         }
 
@@ -181,7 +186,7 @@
         }
 
         if (newPositionFrog > -1) {
-          this.$.elements.rows[0].cells[ newPositionFrog ].classList.add('frog');
+          this.$.elements.rows[0].cells[ newPositionFrog ].classList.add(CSS_STYLE_FROG);
           this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
         }
       }
