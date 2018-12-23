@@ -172,8 +172,8 @@
             this.boxes = newNumberBoxes;
             this.addBoxesByObjects();
           } else if (newNumberBoxes < oldNumberBoxes) {
-            // this.boxes = newNumberBoxes;
-            // this.removeBoxesByObjects();
+            this.boxes = newNumberBoxes;
+            this.removeBoxesByObjects();
           }
         }
       }
@@ -186,6 +186,25 @@
 
           this.push('boxesElements', newBox);
         }
+      }
+      getPositionFrogAdvanced () {
+        return this.boxesElements.filter(box => box.selected)[0].index;
+      }
+      removeBoxesByObjects () {
+        let positionFrog = this.getPositionFrogAdvanced();
+        const numberCreatedBoxes = this.boxesElements.length;
+        const numberBoxes = this.boxes;
+
+        if (positionFrog >= numberBoxes) {
+          positionFrog = numberBoxes;
+          this.selected = positionFrog;
+          this.set(`boxesElements.${positionFrog-1}`, this.getBoxObject(positionFrog, true));
+        }
+
+        for (let i = numberCreatedBoxes-1; i >= numberBoxes; i--) {
+          this.pop('boxesElements');
+        }
+
       }
       generateHtmlBoxes () {
         let cells = [];
