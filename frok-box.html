@@ -61,8 +61,8 @@
     </template>
     <table id='elements'>
       <tr>
-        <template is='dom-repeat' items="{{boxesElements}}">
-          <td class$="{{getBoxClass(item)}}">{{getIndex(item)}}</td>
+        <template id='dinamycElements' is='dom-repeat' items="{{boxesElements}}">
+          <td class$='{{getBoxClass(item)}}' on-click='jumpFrogAdv'>{{getIndex(item)}}</td>
         </template>
       </tr>
     </table>
@@ -97,13 +97,16 @@
       }
       generateObjectBoxes () {
         this.boxesElements = [];
+
         for (let i = 0; i < this.boxes; i++) {
           const box = this.getNewBoxObject(i+1, this.selected);
+
           this.boxesElements.push(box);
         }
       }
       getNewBoxObject (index, itemSelected) {
         const attrSelected = index === itemSelected;
+
         return {
           selected: attrSelected, 
           index
@@ -114,6 +117,46 @@
       }
       getBoxClass (item) {
         return item.selected ? CSS_STYLE_FROG : '';
+      }
+      jumpFrogAdv (event) {
+        const boxSelected = event.model.item;
+
+        if (boxSelected.selected) {
+          const newBoxSelection = boxSelected.index < this.boxesElements.length ? this.boxesElements[ boxSelected.index ] : this.boxesElements[ 0 ];
+
+          // console.log(`boxesElements.${boxSelected.index}.selected`);
+          // console.log(`boxesElements.${newBoxSelection.index}.selected`);
+
+          this.set(`boxesElements.${boxSelected.index-1}`, {selected: false, index: boxSelected.index});
+          this.set(`boxesElements.${newBoxSelection.index-1}`, {selected: true, index: newBoxSelection.index});
+
+          // this.$.dinamycElements.render();
+          // this.notifyPath(`boxesElements.${boxSelected.index}.selected`);
+          // this.notifyPath(`boxesElements.${newBoxSelection.index}.selected`);
+          // this.notifyPath(`boxesElements.${boxSelected.index}`);
+          // this.notifyPath(`boxesElements.${newBoxSelection.index}`);
+          // this.notifyPath(`boxesElements`);
+          // this.boxesElements.render();
+
+          // regenerate all boxes - :S
+          // const newBoxSelection = boxSelected.index <= this.boxesElements.length ? boxSelected.index + 1 : 0;
+          // // this.boxesElements.length = 0;
+          // // this.boxesElements = [];
+          // const newBoxes = [];
+
+          // for (let i = 0; i < this.boxes; i++) {
+          //   const box = this.getNewBoxObject(i+1, newBoxSelection);
+
+          //   newBoxes.push(box);
+          // }
+
+          // console.log('newBoxSelection -> ', newBoxSelection);
+          // // console.log('newBoxSelection - html -> ', JSON.stringify(this.boxesElements.filter(box => box.selected)));
+          // console.log('old boxes ', JSON.stringify(this.boxesElements));
+          // console.log('new boxes ', JSON.stringify(newBoxes));
+
+          // this.boxesElements = newBoxes;
+        }
       }
       generateHtmlBoxes () {
         let cells = [];
