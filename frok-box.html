@@ -106,6 +106,9 @@
       getNewBoxObject (index, itemSelected) {
         const attrSelected = index === itemSelected;
 
+        return this.getBoxObject(index, attrSelected);
+      }
+      getBoxObject (index, attrSelected) {
         return {
           selected: attrSelected, 
           index
@@ -126,8 +129,8 @@
           // console.log(`boxesElements.${boxSelected.index}.selected`);
           // console.log(`boxesElements.${newBoxSelection.index}.selected`);
 
-          this.set(`boxesElements.${boxSelected.index-1}`, {selected: false, index: boxSelected.index});
-          this.set(`boxesElements.${newBoxSelection.index-1}`, {selected: true, index: newBoxSelection.index});
+          this.set(`boxesElements.${boxSelected.index-1}`, this.getBoxObject(boxSelected.index, false));
+          this.set(`boxesElements.${newBoxSelection.index-1}`, this.getBoxObject(newBoxSelection.index, true));
 
           // this.$.dinamycElements.render();
           // this.notifyPath(`boxesElements.${boxSelected.index}.selected`);
@@ -155,6 +158,33 @@
           // console.log('new boxes ', JSON.stringify(newBoxes));
 
           // this.boxesElements = newBoxes;
+        }
+      }
+      changeBoxesByObjects (newNumberBoxes, oldNumberBoxes) {
+        // polymer firefox double change
+        // 1st - newNumberBoxes:0 , oldNumberBoxes:5
+        // 2nd - newNumberBoxes:3 , oldNumberBoxes:0
+        if (!newNumberBoxes) this.oldNumberBoxesAux = oldNumberBoxes;
+        if (!oldNumberBoxes) oldNumberBoxes = this.oldNumberBoxesAux;
+
+        if (newNumberBoxes > 0) {
+          if (newNumberBoxes > oldNumberBoxes) {
+            this.boxes = newNumberBoxes;
+            this.addBoxesByObjects();
+          } else if (newNumberBoxes < oldNumberBoxes) {
+            // this.boxes = newNumberBoxes;
+            // this.removeBoxesByObjects();
+          }
+        }
+      }
+      addBoxesByObjects () {
+        const numberCreatedBoxes = this.boxesElements.length;
+        const numberNewBoxes = this.boxes - numberCreatedBoxes;
+
+        for (let i = 0; i < numberNewBoxes; i++) {
+          const newBox = this.getBoxObject(numberCreatedBoxes + 1, false);
+
+          this.push('boxesElements', newBox);
         }
       }
       generateHtmlBoxes () {
@@ -244,9 +274,6 @@
         } else {
           this.changeBoxesByHTMLControl(newNumberBoxes, oldNumberBoxes);
         }
-      }
-      this.changeBoxesByObjects (newNumberBoxes, oldNumberBoxes) {
-        
       }
       changeBoxesByHTMLControl (newNumberBoxes, oldNumberBoxes){
         // polymer firefox double change
