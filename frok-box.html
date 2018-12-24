@@ -79,12 +79,47 @@
     const CSS_STYLE_FROG = 'frog';
 
     class FrokBox extends Polymer.Element {
+      //*************************************
+      //*** COMPONENT DEFINITION
+      //*************************************
+      static get properties() {
+        return {
+          boxes: {
+            type: Number,
+            notify: true,
+            reflectToAttribute: true,
+            observer: 'changeBoxes',
+            value: 5
+          },
+          selected: {
+            type: Number,
+            notify: true,
+            reflectToAttribute: true,
+            observer: 'changeSelected',
+            value: 1
+          },
+          config: {
+            type: Boolean,
+            notify: true,
+            reflectToAttribute: true,
+            value: false
+          },
+          advanced: {
+            type: Boolean,
+            notify: true,
+            value: false
+          }
+        };
+      }
+      static get is() { return 'frok-box'; }
       static get context() {
         _context: {
           value: null
         }
       }
-      static get is() { return 'frok-box'; }
+      //*************************************************
+      //*** RESOLUTION SHARED METHODS ( objects / html )
+      //*************************************************
       ready () {
         super.ready();
 
@@ -94,6 +129,23 @@
           this.generateHtmlBoxes();
         }
       }
+      changeSelected (newPosition, oldPosition) {
+        if (this.advanced) {
+          this.changeSelectedByObjects(newPosition, oldPosition);
+        } else {
+          this.changeSelectedByHTMLControl(newPosition, oldPosition);
+        }
+      }
+      changeBoxes (newNumberBoxes, oldNumberBoxes) {
+        if (this.advanced) {
+          this.changeBoxesByObjects(newNumberBoxes, oldNumberBoxes);
+        } else {
+          this.changeBoxesByHTMLControl(newNumberBoxes, oldNumberBoxes);
+        }
+      }
+      //***********************************************
+      //*** IMPLEMENTATION USING DOM-REPEAT ( objets )
+      //***********************************************
       generateObjectBoxes () {
         this.boxesElements = [];
 
@@ -185,6 +237,9 @@
           this.set(`boxesElements.${newPositionSelection-1}`, this.getBoxObject(newPositionSelection, true));
         }
       }
+      //**********************************************************
+      //*** IMPLEMENTATION USING HTML - CONTROL ( tags -> table )
+      //**********************************************************
       generateHtmlBoxes () {
         let cells = [];
         for (let i = 0; i < this.boxes; i++) {
@@ -260,24 +315,10 @@
           this.$.elements.rows[0].cells[ newPositionFrog ].addEventListener('click', binding, true);
         }
       }
-      changeSelected (newPosition, oldPosition) {
-        if (this.advanced) {
-          this.changeSelectedByObjects(newPosition, oldPosition);
-        } else {
-          this.changeSelectedByHTMLControl(newPosition, oldPosition);
-        }
-      }
       changeSelectedByHTMLControl (newPosition, oldPosition) {
         if (this.$.elements.rows.length && oldPosition > -1){
           this.selected = newPosition;
           this.updatePositionFrogImpl(oldPosition-1, newPosition);
-        }
-      }
-      changeBoxes (newNumberBoxes, oldNumberBoxes) {
-        if (this.advanced) {
-          this.changeBoxesByObjects(newNumberBoxes, oldNumberBoxes);
-        } else {
-          this.changeBoxesByHTMLControl(newNumberBoxes, oldNumberBoxes);
         }
       }
       changeBoxesByHTMLControl (newNumberBoxes, oldNumberBoxes){
@@ -347,35 +388,6 @@
         box.innerHTML = numberCreatedBoxes + 1;
 
         return box;
-      }
-      static get properties() {
-        return {
-          boxes: {
-            type: Number,
-            notify: true,
-            reflectToAttribute: true,
-            observer: 'changeBoxes',
-            value: 5
-          },
-          selected: {
-            type: Number,
-            notify: true,
-            reflectToAttribute: true,
-            observer: 'changeSelected',
-            value: 1
-          },
-          config: {
-            type: Boolean,
-            notify: true,
-            reflectToAttribute: true,
-            value: false
-          },
-          advanced: {
-            type: Boolean,
-            notify: true,
-            value: false
-          }
-        };
       }
     }
 
