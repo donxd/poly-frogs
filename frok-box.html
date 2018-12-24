@@ -206,6 +206,12 @@
         }
 
       }
+      changeSelectedByObjects (newPosition, oldPosition) {
+        // if (this.$.elements.rows.length && oldPosition > -1){
+        //   this.selected = newPosition;
+        //   this.updatePositionFrogImpl(oldPosition-1, newPosition);
+        // }
+      }
       generateHtmlBoxes () {
         let cells = [];
         for (let i = 0; i < this.boxes; i++) {
@@ -282,6 +288,13 @@
         }
       }
       changeSelected (newPosition, oldPosition) {
+        if (this.advanced) {
+          this.changeSelectedByObjects(newPosition, oldPosition);
+        } else {
+          this.changeSelectedByHTMLControl(newPosition, oldPosition);
+        }
+      }
+      changeSelectedByHTMLControl (newPosition, oldPosition) {
         if (this.$.elements.rows.length && oldPosition > -1){
           this.selected = newPosition;
           this.updatePositionFrogImpl(oldPosition-1, newPosition);
