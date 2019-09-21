@@ -1,0 +1,6 @@
+{
+  "name": "poly-frogs-demo",
+  "short_name": "poly-frogs-demo",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,5 +1,7 @@
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="components/polymer/lib/elements/dom-repeat.html">
+<!-- <link rel="import" href="../../bower_components/polymer/polymer-element.html"> -->
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
 
 <dom-module id="frok-box">
   <template>
@@ -37,8 +39,10 @@
         vertical-align: middle;
       }
     </style>
-    <h2>Hello frog - [[boxes]]!</h2>
-    <template is='dom-if' if='{{config}}'>
+    <h2>Hi frog - [[boxes]]!</h2>
+    <dom-if if="{{config}}">
+    <template>
+    <!-- <template is='dom-if' if='{{config}}'> -->
       <div class='table'>
         <div class='row'>
           <div class='cell'>
@@ -58,6 +62,7 @@
         </div>
       </div>
     </template>
+  </dom-if>
     <table id='elements'>
       <tr>
         <template id='dinamycElements' is='dom-repeat' items="{{boxesElements}}">
@@ -340,7 +345,8 @@
       }
       getPositionFrog () {
           // let boxFrog = this.$.elements.querySelector('.frog');
-        let boxFrog = Polymer.dom(this.root).querySelector('.frog');
+        // let boxFrog = Polymer.dom(this.root).querySelector('.frog');
+        let boxFrog = this.shadowRoot.querySelector('.frog');
 
         let positionFrog = boxFrog.cellIndex;
 
