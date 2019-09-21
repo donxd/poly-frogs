@@ -12,6 +12,8 @@ mv bower_components bower_components.bak
 git checkout gh-pages
 rm -rf bower_components/
 rm index.html
-cp build/default/bower_components/ .
-cp build/default/index.html index.html
+# mv build/default/bower_components/ .
+# mv build/default/index.html index.html
+mv build/default/* ./
+rm -rf build/
 echo "done"
