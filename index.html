@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <title>frok-box</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="bower_components/run/frok-box.html">
+  </head>
+  <body>
+    <frok-box></frok-box>
+    <frok-box advanced="true"></frok-box>
+    <frok-box boxes="7" selected="4" advanced="true"></frok-box>
+    <frok-box advanced="true" config="true"></frok-box>
+    <frok-box boxes="10"></frok-box>
+    <frok-box boxes="7" selected="4"></frok-box>
+    <frok-box id="test_config" config="true"></frok-box>
+    <hr>
+    <laben for="external_boxes">External boxes:</laben><input type="number" id="external_boxes" min="1"> <br>
+    <button id="change_config">Change config</button>
+    <script type="text/javascript">window.onload = () => {
+  document.getElementById('change_config').addEventListener('click', changeConfig, true);
+};
+
+function changeConfig() {
+  const boxes = parseInt(document.getElementById('external_boxes').value);
+  document.getElementById('test_config').setAttribute('boxes', boxes);
+}</script>
+  
+
+</body></html>
